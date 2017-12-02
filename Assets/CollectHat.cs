@@ -1,16 +1,20 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CollectHat : MonoBehaviour {
 
     public GameObject player;
     public GameObject hat;
+    public GameObject loseScreen;
 
-    public float hatNum = 0;
+    public static int hatNum = 0;
 
     public float hatHeight;
     public float startHeight;
+
+    public int groundHitNum;
 
     public bool hit = false;
 
@@ -21,6 +25,7 @@ public class CollectHat : MonoBehaviour {
 
         startHeight = PlayerMovement.height;
         hatHeight = transform.parent.GetComponent<MeshRenderer>().bounds.size.y;
+        loseScreen.SetActive(false);
         
 	}
 	
@@ -54,7 +59,25 @@ public class CollectHat : MonoBehaviour {
             PlayerMovement.heightHat += hatHeight;
             hatNum++;
 
+            
+
+            Debug.Log(hatNum); 
+
             Debug.Log(PlayerMovement.height);
         }
+        if(other.gameObject.tag == "Ground")
+        {
+            groundHitNum++;
+            if(groundHitNum >= 2)
+            {
+                loseScreen.SetActive(true);
+            }
+            Debug.Log(groundHitNum);
+        }
+    }
+
+    public void restartLevel()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }
