@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class CollectHat : MonoBehaviour
-{
+public class CollectHat : MonoBehaviour {
 
     public GameObject player;
     public GameObject hat;
@@ -21,24 +20,22 @@ public class CollectHat : MonoBehaviour
 
     public Vector3 heightAdd;
 
-    // Use this for initialization
-    void Start()
-    {
+	// Use this for initialization
+	void Start () {
 
         startHeight = PlayerMovement.height;
         hatHeight = transform.parent.GetComponent<MeshRenderer>().bounds.size.y;
         loseScreen.SetActive(false);
+        
+	}
+	
+	// Update is called once per frame
+	void Update () {
 
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-
-
-
-    }
+       
+       
+        
+	}
 
 
 
@@ -53,27 +50,29 @@ public class CollectHat : MonoBehaviour
 
             heightAdd = new Vector3(PlayerMovement.myPosition.x, PlayerMovement.myPosition.y + PlayerMovement.heightHat + 1f, PlayerMovement.myPosition.z);
 
-
+            
 
             transform.parent.transform.position = heightAdd;
 
-
+            
 
             PlayerMovement.heightHat += hatHeight;
             hatNum++;
 
+            
 
-
-            Debug.Log(hatNum);
+            Debug.Log(hatNum); 
 
             Debug.Log(PlayerMovement.height);
         }
-        if (other.gameObject.tag == "Ground")
+        if(other.gameObject.tag == "Ground")
         {
             groundHitNum++;
-            if (groundHitNum >= 2)
+            if(groundHitNum >= 2)
             {
                 loseScreen.SetActive(true);
+                Cursor.visible = true;
+                Cursor.lockState = CursorLockMode.None;
             }
             Debug.Log(groundHitNum);
         }
@@ -82,5 +81,7 @@ public class CollectHat : MonoBehaviour
     public void restartLevel()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        hatNum = 0;
+        PlayerMovement.heightHat = 0;
     }
 }
