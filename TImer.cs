@@ -24,9 +24,12 @@ public class TImer : MonoBehaviour {
 
     void TimerUI()
     {
+
         if(CollectHat.hatNum != 5)
         {
+
             seconds += Time.deltaTime;
+
         }
         
 
